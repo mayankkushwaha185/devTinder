@@ -1,16 +1,30 @@
 const express =require('express')
 
 const app = express()
+const {userAuth, admin} = require("./middlewares/authMiddleware")
 
-app.use("/hello",(req, res)=>{
-    res.send("heloo")
+app.use("/admin", admin)
+
+app.get("/admin/getData", (req,res)=>{
+    console.log("get data")
+    res.send("user data send")
 })
-app.use("/",(req, res)=>{
-    res.send("heloosd")
-})
-app.use("/",(req, res)=>{
-    res.send("hefdsgloosd")
+app.get ("/admin/deleteUser", (req, res)=>{
+    console.log("")
+    res.send("User Deleted")
 })
 
+app.get("/user/data", userAuth, (req,res)=>{
+    res.send("user data send")
+})
+app.get("/user/login", (req,res)=>{
+    res.send("user LOgin")
+})
 
-app.listen(3000)
+app.get("/user/delete", userAuth, (req,res)=>{
+    res.send("user data deleted")
+})
+
+app.listen(3000, ()=>{
+    console.log("Server is Running on server 0n port 3000")
+})
